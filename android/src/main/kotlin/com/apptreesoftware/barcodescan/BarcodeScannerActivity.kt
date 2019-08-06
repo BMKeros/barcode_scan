@@ -3,6 +3,7 @@ package com.apptreesoftware.barcodescan
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
@@ -30,6 +31,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         scannerView.setAutoFocus(true)
         // this paramter will make your HUAWEI phone works great!
         scannerView.setAspectTolerance(0.5f)
+        scannerView.setBorderColor(Color.TRANSPARENT);
         setContentView(scannerView)
     }
 
