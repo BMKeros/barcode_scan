@@ -3,13 +3,16 @@ package com.apptreesoftware.barcodescan
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import android.view.ViewGroup
+import android.widget.TextView
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
@@ -17,6 +20,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     lateinit var scannerView: me.dm7.barcodescanner.zxing.ZXingScannerView
+    lateinit var contentFrame: ViewGroup
+    lateinit var title: TextView
 
     companion object {
         val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
@@ -26,16 +31,29 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = ""
+
+        setContentView(R.layout.custom_scanner_layout)
+
+        contentFrame = findViewById(R.id.content_frame)
+        title = findViewById(R.id.title)
+
+        val text = "<font color=#ffffff>Escanea el</font> <font color=#ff523f>Codigo QR</font> <font color=#ffffff>de tu Mesa</font>"
+
+        title.setText(Html.fromHtml(text))
+
         scannerView = ZXingScannerView(this)
         scannerView.setAutoFocus(true)
         // this paramter will make your HUAWEI phone works great!
         scannerView.setAspectTolerance(0.5f)
         scannerView.setBorderColor(Color.TRANSPARENT);
-        setContentView(scannerView)
+        scannerView.setBackgroundColor(Color.rgb(96, 96, 96))
+        scannerView.setLaserColor(Color.RED);
+
+        contentFrame.addView(scannerView)
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (scannerView.flash) {
             val item = menu.add(0,
                     TOGGLE_FLASH, 0, "Flash Off")
@@ -55,7 +73,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     override fun onResume() {
         super.onResume()
@@ -88,7 +106,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     private fun requestCameraAccessIfNecessary(): Boolean {
         val array = arrayOf(Manifest.permission.CAMERA)
         if (ContextCompat
-                .checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        .checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, array,
                     REQUEST_TAKE_PHOTO_CAMERA_PERMISSION)
@@ -97,7 +115,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         return false
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             REQUEST_TAKE_PHOTO_CAMERA_PERMISSION -> {
                 if (PermissionUtil.verifyPermissions(grantResults)) {
