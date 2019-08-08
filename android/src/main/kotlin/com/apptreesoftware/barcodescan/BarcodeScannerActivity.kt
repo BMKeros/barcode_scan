@@ -2,6 +2,7 @@ package com.apptreesoftware.barcodescan
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -15,6 +16,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
+import android.content.res.Resources
+
+
 
 
 class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
@@ -48,11 +52,13 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
         scannerView.setBorderColor(Color.TRANSPARENT);
         scannerView.setBackgroundColor(Color.rgb(96, 96, 96))
-        scannerView.setLaserColor(Color.RED);
+        scannerView.setLaserColor(Color.RED)
+        scannerView.setBorderCornerRadius(8)
 
         contentFrame.addView(scannerView)
 
     }
+
 
     override fun onResume() {
         super.onResume()

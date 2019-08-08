@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat_light"
                 android:gravity="center_horizontal"
-                android:textSize="23sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
     </RelativeLayout>
