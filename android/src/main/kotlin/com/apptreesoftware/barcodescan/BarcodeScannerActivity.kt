@@ -37,14 +37,15 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         contentFrame = findViewById(R.id.content_frame)
         title = findViewById(R.id.title)
 
-        val text = "<font color=#ffffff>Escanea el</font> <font color=#ff523f>Codigo QR</font> <font color=#ffffff>de tu Mesa</font>"
+        val text = "<font color=#ffffff>Escanea el</font> <font color=#ff523f>código QR</font><br><font color=#ffffff>de tu mesa</font>"
 
         title.setText(Html.fromHtml(text))
 
         scannerView = ZXingScannerView(this)
         scannerView.setAutoFocus(true)
         // this paramter will make your HUAWEI phone works great!
-        scannerView.setAspectTolerance(0.5f)
+        // scannerView.setAspectTolerance(0.5f)
+
         scannerView.setBorderColor(Color.TRANSPARENT);
         scannerView.setBackgroundColor(Color.rgb(96, 96, 96))
         scannerView.setLaserColor(Color.RED);
@@ -52,28 +53,6 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         contentFrame.addView(scannerView)
 
     }
-
-    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (scannerView.flash) {
-            val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash Off")
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        } else {
-            val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash On")
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == TOGGLE_FLASH) {
-            scannerView.flash = !scannerView.flash
-            this.invalidateOptionsMenu()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }*/
 
     override fun onResume() {
         super.onResume()
